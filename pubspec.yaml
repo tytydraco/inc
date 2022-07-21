@@ -1,0 +1,15 @@
+name: inc
+description: An inline pattern compiler for embedded Python code.
+version: 1.0.0
+repository: https://github.com/tytydraco/inc
+
+environment:
+  sdk: '>=2.17.6 <3.0.0'
+
+dependencies:
+  args: ^2.3.1
+
+dev_dependencies:
+  lints: ^2.0.0
+  test: ^1.16.0
+  very_good_analysis: ^3.0.1
