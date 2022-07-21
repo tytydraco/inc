@@ -8,6 +8,6 @@ inc -i README.md -o example_compiled.md
 ```
 
 |>
-for i in range(1, 100):
+for i in range(0, 100):
     print(f' * {i + 1}')
 <|
