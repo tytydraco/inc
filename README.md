@@ -1,6 +1,6 @@
 # inc
 
-An inline pattern compiler for embedded Python code.
+An inline pattern compiler for embedding Python code into static files.
 
 # Example use-case
 
