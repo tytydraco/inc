@@ -47,6 +47,12 @@ Future<void> main(List<String> args) async {
       help: 'Continue execution even if stderr contains errors or '
           'the exit code is non-zero.',
       abbr: 'I',
+    )
+    ..addFlag(
+      'trim',
+      help: 'Remove leading and trailing whitespaces from the output.',
+      abbr: 't',
+      defaultsTo: true,
     );
 
   try {
@@ -56,6 +62,7 @@ Future<void> main(List<String> args) async {
     final beginPattern = results['begin'] as String;
     final endPattern = results['end'] as String;
     final ignoreErrors = results['ignore-errors'] as bool;
+    final trim = results['trim'] as bool;
 
     // Read input file if one was given, else use stdin.
     final String inputText;
@@ -76,6 +83,7 @@ Future<void> main(List<String> args) async {
       beginPattern: beginPattern,
       endPattern: endPattern,
       ignoreErrors: ignoreErrors,
+      trim: trim,
     );
     final outputText = await inc.compile();
 

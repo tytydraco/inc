@@ -33,13 +33,16 @@ The latest version for this package is 1.13.15
 # Usage
 
 ```
--h, --help      Show the usage for this program.
--i, --input     Input file path to compile from. If none is provide, the standard input is used.
--o, --output    Output file path to write to. If none is provide, the standard output is used.
--1, --begin     Beginning pattern to match with.
-                (defaults to "|>")
--2, --end       Ending pattern to match with.
-                (defaults to "<|")
+-h, --help                  Show the usage for this program.
+-i, --input                 Input file path to compile from. If none is provide, the standard input is used.
+-o, --output                Output file path to write to. If none is provide, the standard output is used.
+-1, --begin                 Beginning pattern to match with.
+                            (defaults to "|>")
+-2, --end                   Ending pattern to match with.
+                            (defaults to "<|")
+-I, --[no-]ignore-errors    Continue execution even if stderr contains errors or the exit code is non-zero.
+-t, --[no-]trim             Remove leading and trailing whitespaces from the output.
+                            (defaults to on)
 ```
 
 # Installing

@@ -10,6 +10,7 @@ class Inc {
     this.beginPattern = '|>',
     this.endPattern = '<|',
     this.ignoreErrors = false,
+    this.trim = true,
   });
 
   /// Input text to provide.
@@ -24,6 +25,9 @@ class Inc {
   /// Continue execution, even if errors occur.
   final bool ignoreErrors;
 
+  /// Trim leading and trailing whitespaces from the output.
+  final bool trim;
+
   late final _beginPatternEsc = RegExp.escape(beginPattern);
   late final _endPatternEsc = RegExp.escape(endPattern);
 
@@ -34,10 +38,13 @@ class Inc {
     final arguments = shellParts.sublist(1);
     final process = await Process.run(executable, arguments);
 
+    final processStderr = process.stderr as String;
+    final processStdout = process.stdout as String;
+
     if (!ignoreErrors) {
       // Non-empty stderr output.
-      if (process.stderr.toString().isNotEmpty) {
-        stderr.writeln(process.stderr);
+      if (processStderr.isNotEmpty) {
+        stderr.writeln(processStderr);
         throw OSError(
           'Finished with stderr',
           process.exitCode,
@@ -53,7 +60,12 @@ class Inc {
       }
     }
 
-    return process.stdout.toString();
+    // Trim output if specified.
+    if (trim) {
+      return processStdout.trim();
+    } else {
+      return processStdout;
+    }
   }
 
   /// Compile the first pattern block we discover in [input], and return the
