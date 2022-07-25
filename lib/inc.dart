@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:io/io.dart';
+
 /// An inline code compiler.
 class Inc {
   /// Create a new [Inc] compiler using some [input].
@@ -7,6 +9,7 @@ class Inc {
     this.input, {
     this.beginPattern = '|>',
     this.endPattern = '<|',
+    this.ignoreErrors = false,
   });
 
   /// Input text to provide.
@@ -18,18 +21,37 @@ class Inc {
   /// Pattern that finishes surrounding the inline code.
   final String endPattern;
 
+  /// Continue execution, even if errors occur.
+  final bool ignoreErrors;
+
   late final _beginPatternEsc = RegExp.escape(beginPattern);
   late final _endPatternEsc = RegExp.escape(endPattern);
 
   /// Evaluate the [input] code and return the result.
   Future<String> _evaluate(String input) async {
-    final process = await Process.run(
-      'python',
-      [
-        '-c',
-        input,
-      ],
-    );
+    final shellParts = shellSplit(input);
+    final executable = shellParts[0];
+    final arguments = shellParts.sublist(1);
+    final process = await Process.run(executable, arguments);
+
+    if (!ignoreErrors) {
+      // Non-empty stderr output.
+      if (process.stderr.toString().isNotEmpty) {
+        stderr.writeln(process.stderr);
+        throw OSError(
+          'Finished with stderr',
+          process.exitCode,
+        );
+      }
+
+      // Non-success error code.
+      if (process.exitCode != 0) {
+        throw OSError(
+          'Finished with non-zero exit code',
+          process.exitCode,
+        );
+      }
+    }
 
     return process.stdout.toString();
   }

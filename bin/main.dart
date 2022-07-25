@@ -41,6 +41,12 @@ Future<void> main(List<String> args) async {
       help: 'Ending pattern to match with.',
       defaultsTo: '<|',
       abbr: '2',
+    )
+    ..addFlag(
+      'ignore-errors',
+      help: 'Continue execution even if stderr contains errors or '
+          'the exit code is non-zero.',
+      abbr: 'I',
     );
 
   try {
@@ -49,6 +55,7 @@ Future<void> main(List<String> args) async {
     final outputFilePath = results['output'] as String?;
     final beginPattern = results['begin'] as String;
     final endPattern = results['end'] as String;
+    final ignoreErrors = results['ignore-errors'] as bool;
 
     // Read input file if one was given, else use stdin.
     final String inputText;
@@ -68,6 +75,7 @@ Future<void> main(List<String> args) async {
       inputText,
       beginPattern: beginPattern,
       endPattern: endPattern,
+      ignoreErrors: ignoreErrors,
     );
     final outputText = await inc.compile();
 

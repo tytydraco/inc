@@ -1,27 +1,17 @@
 # inc
 
-An inline pattern compiler for embedding Python code into static files.
+An inline pattern compiler for embedding code into static files.
 
 # Example use-case
 
 Say we have a README file containing the latest version of a package version. Instead of hardcoding that version number
-and manually updating it when necessary, you can embed some Python code to fetch the version number and use `inc` to
-compile your part-Markdown-part-python file into static Markdown. Here is an example of what that would look like:
+and manually updating it when necessary, you can embed some shell code to fetch the version number and use `inc` to
+compile your part-Markdown-part-shell file into static Markdown. Here is an example of what that would look like:
 
 ```markdown
 # My package
 
-The latest version for this package is |>
-```
-
-```py
-with open('package.txt') as p:
-    version = p.readline()
-    print(version, end='')
-```
-
-```markdown
-<|
+The latest version for this package is |>cat package.txt<|
 
 # Features
 

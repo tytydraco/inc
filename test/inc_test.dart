@@ -4,23 +4,21 @@ import 'package:test/test.dart';
 void main() {
   group('Inc', () {
     test('Compile test string', () async {
-      final inc = Inc("Hello world, |>print('tester', end='')<|, thanks!");
+      final inc = Inc('Hello world, |>echo -n tester<|, thanks!');
 
       final result = await inc.compile();
       expect(result, 'Hello world, tester, thanks!');
     });
 
     test('Compile nested test strings', () async {
-      final inc =
-          Inc("|>print('outer with |>print('inner', end='')<|', end='')<|");
+      final inc = Inc('|>echo -n outer with |>echo -n inner<|<|');
 
       final result = await inc.compile();
       expect(result, 'outer with inner');
     });
 
     test('Compile with adjacent test strings', () async {
-      final inc =
-          Inc("|>print('first', end='')<| then |>print('next', end='')<|");
+      final inc = Inc('|>echo -n first<| then |>echo -n next<|');
 
       final result = await inc.compile();
       expect(result, 'first then next');
@@ -28,12 +26,12 @@ void main() {
 
     test('Compile with multiline test string', () async {
       final inc = Inc(
-        """
-|>
-x = 10
-y = 5
-print(x + y, end='')
-<|""",
+        r'''
+|>bash -c "
+x=10
+y=5
+echo -n $((x+y))
+"<|''',
       );
 
       final result = await inc.compile();
@@ -62,14 +60,14 @@ print(x + y, end='')
     });
 
     test('Compile with dangling beginning pattern', () async {
-      final inc = Inc("here |>|>print('only once', end='')<|");
+      final inc = Inc('here |>|>echo -n only once<|');
 
       final result = await inc.compile();
       expect(result, 'here |>only once');
     });
 
     test('Compile with dangling ending pattern', () async {
-      final inc = Inc("here |>print('only once', end='')<|<|");
+      final inc = Inc('here |>echo -n only once<|<|');
 
       final result = await inc.compile();
       expect(result, 'here only once<|');
@@ -77,7 +75,7 @@ print(x + y, end='')
 
     test('Compile with non-default patterns', () async {
       final inc = Inc(
-        "hello [print('world', end='')]",
+        'hello [echo -n world]',
         beginPattern: '[',
         endPattern: ']',
       );
@@ -88,7 +86,7 @@ print(x + y, end='')
 
     test('Compile with non-default identical patterns', () async {
       final inc = Inc(
-        "hello *print('world', end='')*",
+        'hello *echo -n world*',
         beginPattern: '*',
         endPattern: '*',
       );
@@ -99,7 +97,7 @@ print(x + y, end='')
 
     test('Compile with adjacent non-default identical patterns', () async {
       final inc = Inc(
-        "*print('first', end='')* then *print('next', end='')*",
+        '*echo -n first* then *echo -n next*',
         beginPattern: '*',
         endPattern: '*',
       );

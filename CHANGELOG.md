@@ -2,6 +2,7 @@
 
 * Use positional parameters when applicable
 * Merge evaluator class with inc class
+* Use native shell execution instead of Python
 
 ## 1.0.1+1
 
