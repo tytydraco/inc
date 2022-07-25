@@ -1,10 +1,10 @@
-import 'package:inc/evaluator.dart';
+import 'dart:io';
 
 /// An inline code compiler.
 class Inc {
   /// Create a new [Inc] compiler using some [input].
-  Inc({
-    required this.input,
+  Inc(
+    this.input, {
     this.beginPattern = '|>',
     this.endPattern = '<|',
   });
@@ -20,6 +20,19 @@ class Inc {
 
   late final _beginPatternEsc = RegExp.escape(beginPattern);
   late final _endPatternEsc = RegExp.escape(endPattern);
+
+  /// Evaluate the [input] code and return the result.
+  Future<String> _evaluate(String input) async {
+    final process = await Process.run(
+      'python',
+      [
+        '-c',
+        input,
+      ],
+    );
+
+    return process.stdout.toString();
+  }
 
   /// Compile the first pattern block we discover in [input], and return the
   /// result.
@@ -40,7 +53,7 @@ class Inc {
     // Only compile non-empty blocks
     var output = '';
     if (innerBlock != null && innerBlock.isNotEmpty) {
-      output = await Evaluator(input: innerBlock).evaluate();
+      output = await _evaluate(innerBlock);
     }
 
     return input.replaceFirst(incRegEx, output);

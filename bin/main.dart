@@ -65,7 +65,7 @@ Future<void> main(List<String> args) async {
 
     // Compile with [Inc].
     final inc = Inc(
-      input: inputText,
+      inputText,
       beginPattern: beginPattern,
       endPattern: endPattern,
     );
