@@ -1,3 +1,7 @@
+## 1.0.2+1
+
+* Run commands in shell
+
 ## 1.0.2
 
 * Use positional parameters when applicable

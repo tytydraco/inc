@@ -36,7 +36,11 @@ class Inc {
     final shellParts = shellSplit(input);
     final executable = shellParts[0];
     final arguments = shellParts.sublist(1);
-    final process = await Process.run(executable, arguments);
+    final process = await Process.run(
+      executable,
+      arguments,
+      runInShell: true,
+    );
 
     final processStderr = process.stderr as String;
     final processStdout = process.stdout as String;
