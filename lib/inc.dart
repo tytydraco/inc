@@ -45,23 +45,13 @@ class Inc {
     final processStderr = process.stderr as String;
     final processStdout = process.stdout as String;
 
-    if (!ignoreErrors) {
-      // Non-empty stderr output.
-      if (processStderr.isNotEmpty) {
-        stderr.writeln(processStderr);
-        throw OSError(
-          'Finished with stderr',
-          process.exitCode,
-        );
-      }
-
-      // Non-success error code.
-      if (process.exitCode != 0) {
-        throw OSError(
-          'Finished with non-zero exit code',
-          process.exitCode,
-        );
-      }
+    // Non-success error code.
+    if (!ignoreErrors && process.exitCode != 0) {
+      stderr.writeln(processStderr);
+      throw OSError(
+        'Finished with non-zero exit code',
+        process.exitCode,
+      );
     }
 
     // Trim output if specified.

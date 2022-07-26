@@ -44,8 +44,7 @@ Future<void> main(List<String> args) async {
     )
     ..addFlag(
       'ignore-errors',
-      help: 'Continue execution even if stderr contains errors or '
-          'the exit code is non-zero.',
+      help: 'Continue execution even if the exit code is non-zero.',
       abbr: 'I',
     )
     ..addFlag(
