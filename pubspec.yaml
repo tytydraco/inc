@@ -11,7 +11,6 @@ dependencies:
   io: ^1.0.3
 
 dev_dependencies:
-  lints: ^2.0.0
   test: ^1.16.0
   very_good_analysis: ^3.0.1
 
