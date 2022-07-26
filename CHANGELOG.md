@@ -1,3 +1,7 @@
+## 1.0.3
+
+* Allow stderr if success code returned
+
 ## 1.0.2+1
 
 * Run commands in shell
