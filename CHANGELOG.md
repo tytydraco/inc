@@ -1,3 +1,7 @@
+## 1.0.4
+
+* Use proper naming convention for executable
+
 ## 1.0.3+1
 
 * Convert LICENSE to 2-Clause BSD
