@@ -1,6 +1,6 @@
 name: inc
 description: An inline pattern compiler for embedding code into static files.
-version: 1.0.4
+version: 1.0.5
 repository: https://github.com/tytydraco/inc
 
 environment:

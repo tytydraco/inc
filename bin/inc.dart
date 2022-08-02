@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:args/args.dart';
-import 'package:inc/inc.dart';
+import 'package:inc/src/inc.dart';
 
 Future<void> main(List<String> args) async {
   final argParser = ArgParser();

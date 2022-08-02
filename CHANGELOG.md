@@ -1,3 +1,7 @@
+## 1.0.5
+
+* Convert from lib to app
+
 ## 1.0.4
 
 * Use proper naming convention for executable
